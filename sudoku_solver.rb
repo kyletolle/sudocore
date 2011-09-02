@@ -4,11 +4,25 @@ class Sudoku
   
   # Parses sudoku puzzle file and builds data structure for solving.
   # @parm string file path to file containing sudoku puzzle
-  def initialize(file)
+  def initialize(filename)
+    # I think I'll want to use a puzzle class to abstract things away.
     @puzzle = []
+
+    #TODO: Error checking on whether the file exists, whether there are more than 9 colums and 9 rows.
+    # Read in the file with the puzzle
+    File.open(filename) do |file|
+      while line = file.gets
+        chars = []
+        line.chomp.each_char do |char| 
+          chars << char
+        end
+        @puzzle << chars
+      end
+    end
+
+    @puzzle.each do |p| p p end
   end
   
-  #
   # Solves sudoku puzzle
   def solve
     
@@ -21,7 +35,6 @@ class Sudoku
   end
 end
 
-# TODO: Parse command line options
 # Hold the parsed options
 options = {}
 
