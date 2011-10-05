@@ -149,29 +149,40 @@ class Sudoku
     
     # Make a pretty string of the puzzle
     visual_puzzle = 
-    @puzzle.each_with_index.inject("") do |puzzle_string, (row, row_num)|
-      if (row_num+1) % 3 == 0 and row_num < 8
-        row_sep = " - - - + - - - + - - -\n"
-      else
-        row_sep = ""
+      # Format each row
+      @puzzle.each_with_index.inject("") do |puzzle_string, (row, row_num)|
+
+        # Put a grid in between the rows of nonets.
+        if (row_num+1) % 3 == 0 and row_num < 8
+          row_sep = " - - - + - - - + - - -\n"
+        else
+          row_sep = ""
+        end
+  
+        # Format each cell
+        row.each_with_index.inject(puzzle_string) do |row_string, (cell, cell_num)|
+
+            # Put a grid between the columns of nonets.
+            if (cell_num+1) % 3 == 0 and cell_num < 8
+              sep = " |"
+            else
+              sep = ""
+            end
+  
+            # Add this cell's value to the current row's string, with formatting as needed.
+            row_string + " " + cell.to_s + sep
+
+          # We want each row to be on it's own newline.
+          end + "\n" + row_sep
+
       end
-
-      row.each_with_index.inject(puzzle_string) do |row_string, (cell, cell_num)|
-          if (cell_num+1) % 3 == 0 and cell_num < 8
-            sep = " |"
-          else
-            sep = ""
-          end
-
-          row_string + " " + cell.to_s + sep
-        end + "\n" + row_sep
-    end
-
+  
     "\n" + visual_puzzle + "\n"
-
+  
   end
 
 
+  # Add the current row to the puzzle
   def add_row
 
     unless @current_row.nil?
@@ -182,6 +193,7 @@ class Sudoku
   end
 
 
+  # Add a cell to the current row of the puzzle
   def add_cell(cell)
 
     @current_row ||= []
@@ -190,10 +202,10 @@ class Sudoku
       unless cell.class == Cell.class
         @current_row << cell
       else
-        raise RuntimeError, "Must add a cell to the Sudoku puzzle"
+        raise RuntimeError, "Must add a cell to the Sudoku puzzle."
       end
     else
-      raise RuntimeError, "Sudoku puzzle can't have more than 9 Cells in a row. You added #{@current_row.size} elements."
+      raise RuntimeError, "Sudoku puzzle can't have more than 9 Cells in a row."
     end
 
   end
@@ -201,6 +213,9 @@ class Sudoku
 
   def try_solve(index)
 
+    ## Algorithm
+    #
+    # convert index to array indices
     # if already filled in
     #   try_solve(next index)
     #   return solved?
@@ -218,6 +233,17 @@ class Sudoku
     #       break
     #     else
     #       next
+    
+    ## Implementation
+    #
+    #if @puzzle[index].blank?
+    #  #get potential values
+    #else
+    #  #try_solve(index.next)
+    #  #return solved?
+    #end
+
+
 
   end
 
