@@ -2,33 +2,51 @@ require 'optparse'
 
 class Sudoku
 
-  class Puzzle < Array
-
-  end
-  
-DEC_REGEX = /^[0-9]$/
+  DEC_REGEX = /^[0-9]$/
   HEX_REGEX = /^[a-zA-z0-9]$/
   BLANKS_REGEX = /^[_]$/
+  
+  # Names of classes from: http://en.wikipedia.org/wiki/Sudoku#Terminology
+  #
+  class Puzzle
+    # Is a n*n array of Cells
+    #TODO: How do I add cells to the puzzle?
+
+    class Cell
+  
+      def initialize(char)
+        #TODO: Check to see if char matches the digit or blank regexes.
+        #If so, store it. If not, raise error.
+        #
+      end
+  
+      def blank?
+        return # whether char matches blanks regex
+      end
+  
+    end
+  
+    class Row
+    end
+  
+    class Column
+    end
+  
+    class Nonet
+    end
+    
+    class House
+    end
+  end
 
   #TODO: How can I make options optional and also a hash?
   # Parses sudoku puzzle file and builds data structure for solving.
   # @parm string file path to file containing sudoku puzzle
   #TODO: @parm for options
-  def initialize(filename, options)
+  def initialize(filename)
     
-    ## Parse the options ##
-    
-    # Whether we want to use decimal or hex digits.
-    case options[:base]
-    when :dec
+    #TODO: Add whether we want to use decimal or hex digits.
       @digit_regex = DEC_REGEX
-
-    when :hex
-      @digit_regex = HEX_REGEX
-    
-    else
-      raise ArgumentError, ":base option can be either :dec (for decimal) or :hex (for hexadecimal)"
-    end
 
     # Characters to represent valid blank characters in the puzzle
     @blank_regex = BLANKS_REGEX
@@ -36,7 +54,7 @@ DEC_REGEX = /^[0-9]$/
     ## Read and parse in the puzzle now
 
     #TODO: I think I'll want to use a puzzle class to abstract things away.
-    @puzzle = Puzzle.new
+    @puzzle = [] #Puzzle.new
 
     # Read in the file with the puzzle
     File.open(filename) do |file|
@@ -46,6 +64,7 @@ DEC_REGEX = /^[0-9]$/
         line.chomp.each_char do |char| 
           # Make sure we have either valid digits or blanks
           unless char =~ @digit_regex or char =~ @blank_regex
+            #TODO: Move this error into a class inside Puzzle.
             raise RuntimeError, "Each character of the Sudoku puzzle must be a valid character or blank entry." 
           end
 
@@ -53,6 +72,7 @@ DEC_REGEX = /^[0-9]$/
         end
 
         # Rows must have 9 characters
+        #TODO: Move this error into a class inside Puzzle.
         unless chars.count == 9
           raise RuntimeError, "Each row in a Sudoku puzzle must have 9 columns."
         end
@@ -62,6 +82,7 @@ DEC_REGEX = /^[0-9]$/
       end
       
       # Puzzle must have 9 rows
+      #TODO: Move this error into a class inside Puzzle.
       unless line_count == 9
         raise RuntimeError, "Sudoku puzzle must have 9 rows."
       end
@@ -98,6 +119,11 @@ DEC_REGEX = /^[0-9]$/
     # - Brute Force
     # - Graph Coloring
     # - Some hybrid between the two?
+    
+    #TODO: Do a not-dumb brute force first.
+    #TODO: Then figure out how to abstract the algorithm away, so I can swap in a graph
+    # coloring algorithm later!
+
     puts 'TODO: Implement Sudoku#solve'
     self
   end
@@ -105,7 +131,33 @@ DEC_REGEX = /^[0-9]$/
   # Returns string representation of sudoku puzzle for printing
   # @return string
   def to_s
-    return 'TODO: Implement Sudoku#to_s';
+    # Make a string of all the puzzle values
+    @puzzle.inject("") do |str1, row|
+      # Put all the values onto one line
+      row.inject(str1) {|str2, val| str2 + val } + "\n"
+    end
+  end
+
+  private
+  def try_solve(index)
+    # if already filled in
+    #   try_solve(next index)
+    #   return solved?
+    # else
+    #   get potential values
+    #   if no potential values
+    #     return false
+    #   
+    #   for each potential value
+    #     fill in spot with value
+    #     if last box
+    #       return puzzle is valid?
+    #     try_solve(next index)
+    #     if solved?
+    #       break
+    #     else
+    #       next
+
   end
 end
 
@@ -137,5 +189,5 @@ optparse.parse!
 filename = ARGV[0]
 
 #TODO: Use flag from command line to pass along whether this is hex or decimal
-sudoku = Sudoku.new(filename, base: :dec)
+sudoku = Sudoku.new(filename)
 puts sudoku.solve.to_s
