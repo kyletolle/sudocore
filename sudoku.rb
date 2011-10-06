@@ -37,10 +37,6 @@ class Sudoku
     #TODO: Then figure out how to abstract the algorithm away, so I can swap in a graph
     # coloring algorithm later!
 
-    unless @puzzle.size == 9
-      raise RuntimeError, "Sudoku puzzle must have 9 rows."
-    end
-
     if valid?
       try_solve(0)
     else
@@ -81,6 +77,33 @@ class Sudoku
 
   end
 
+  
+  def index_to_indices(index)
+
+    row    = index / 9;
+    column = index % 9;
+
+    return row, column
+
+  end
+
+
+  def potential_values(index)
+    
+    # Check rows, columns and nonets for values we can't be
+    # and eliminate them from the values that we can be.
+    # So we are left with only a list of potential values
+    row_num, col_num = index_to_indices(index)
+
+    row = @puzzle[row]
+
+    col = @puzzle.map {|row| row[col]}
+
+    #TODO: Find the algorithm for calculating nonets!
+    #nonet = 
+    
+  end
+
 
   def try_solve(index)
 
@@ -106,21 +129,31 @@ class Sudoku
     #       next
     
     ## Implementation
-    #
-    #if @puzzle[index].blank?
-    #  #get potential values
-    #else
-    #  #try_solve(index.next)
-    #  #return solved?
-    #end
+    
+    row, column = index_to_indices(index)
+    
+    cell = @puzzle[row][column]
 
-
+    if cell.blank?
+      p_vals = potential_values(index)
+      #get potential values
+    else
+      #try_solve(index.next)
+      #return solved?
+    end
 
   end
+
 
   def valid?
+
+    unless @puzzle.size == 9
+      raise RuntimeError, "Sudoku puzzle must have 9 rows."
+    end
+
     return true #TODO: Find out if there are conflicts in row, column or nonet.
+
   end
 
-  private :add_row, :add_cell, :try_solve, :valid?
+  private :add_row, :add_cell, :try_solve, :valid?, :index_to_indices
 end
