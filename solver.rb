@@ -31,4 +31,6 @@ filename = ARGV[0]
 
 #TODO: Use flag from command line to pass along whether this is hex or decimal
 sudoku = Sudoku.new(filename)
+puts "Starting puzzle at #{Time.now}"
 puts sudoku.solve.to_s
+puts "Solved puzzle at #{Time.now}"
