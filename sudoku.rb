@@ -172,7 +172,7 @@ class Sudoku
   # puzzle's index position could be.
   def potential_values(index)
 
-    ## Check the cells house for values we can't be
+    ## Check the cell's house for values we can't be
     ## and eliminate them from the values that we can be.
     ## So we are left with only a list of potential values
     ##
@@ -196,15 +196,14 @@ class Sudoku
   end
 
 
-  #TODO: Doesn't work on a blank puzzle...
   def try_solve(index)
     #TODO:REMOVE ME!
     #print_on = [0]
     #if print_on.include?(index)
     #  puts self.to_s
     #end
-    #puts "Waiting to go ahead"
-    #STDIN.gets
+    puts "Waiting to go ahead. Hit enter."
+    STDIN.gets
 
     ## Algorithm
     #
@@ -229,23 +228,18 @@ class Sudoku
     
     ## Implementation
     
-    #TODO:REMOVE ME!
-    #puts "Solving for Index: #{index}"
+    # If we've completed the entire puzzle, we want to make sure it's been validly solved.
+    if index == (9*9)
+      return solved?
+    end
+
     row, col = index_to_indices(index)
     
     cell = @puzzle[row][col]
 
-    #TODO: Need to figure out why this algorithm doesn't seem to be working.
     if cell.blank?
       p_vals = potential_values(index)
 
-#TODO:REMOVE ME!
-#if p_vals.empty?
-  #puts "No potential values for @puzzle[#{row}][#{col}]"
-  #TODO:REMOVE ME!
-  #puts self.to_s
-#end
-#/TODO
       return false if p_vals.empty?
 
       p_vals.each do |p_val|
@@ -261,15 +255,11 @@ class Sudoku
         end
       end
 
-      #TODO:RESET THE VALUE HERE TO BE BLANK AGAIN!
+      # Resets the value here to be blank so it can be changed later.
       cell.char = "."
       return false
 
     else
-      if index.next == (9*9)
-        return solved?
-      end
-
       try_solve(index.next)
     end
 
@@ -289,7 +279,7 @@ class Sudoku
 
   def solved?
     #TODO:REMOVE ME!
-    puts "Checking to see if puzzle is solved!"
+    #puts "Checking to see if puzzle is solved!"
     #TODO: A puzzle is solved if each of the rows, columns and nonets have the values 1-9.
     # Check to see if all the rows are valid
     #TODO: Have a function that returns each row of the puzzle.
