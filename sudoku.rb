@@ -196,9 +196,10 @@ class Sudoku
   end
 
 
+  #TODO: Doesn't work on a blank puzzle...
   def try_solve(index)
     #TODO:REMOVE ME!
-    #print_on = [36]
+    #print_on = [0]
     #if print_on.include?(index)
     #  puts self.to_s
     #end
