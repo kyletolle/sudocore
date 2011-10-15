@@ -41,6 +41,7 @@ class Sudoku
     #TODO: Do a not-dumb brute force first.
     #TODO: Then figure out how to abstract the algorithm away, so I can swap in a graph
     # coloring algorithm later!
+    #TODO: Need to catch if a row doesn't have 9 cells.
     if valid?
       try_solve(0)
     else
@@ -97,11 +98,11 @@ class Sudoku
   # Return sorted array of non-blank values in this cell's row
   def values_in_row(row_num)
 
-    # Only select the elements from the row that aren't blank, then sort it
+    # Only select the elements from the row that aren't blank
     row_vals =
       @puzzle[row_num].select do |val|
         not val.blank?
-      end.sort!
+      end
 
     # Convert the array of cells to an array of integers
     row_vals.map! {|cell| cell.to_i }
@@ -113,9 +114,9 @@ class Sudoku
   def values_in_col(col_num)
 
     # Iterate over all rows to get the specific column values and
-    # only select these values if they aren't blank, then sort it.
+    # only select these values if they aren't blank
     col_vals =
-      @puzzle.map {|row| row[col_num] }.select {|val| not val.blank?}.sort!
+      @puzzle.map {|row| row[col_num] }.select {|val| not val.blank?}
 
     # Convert the array of cells to an array of integers
     col_vals.map! {|cell| cell.to_i }
@@ -159,9 +160,6 @@ class Sudoku
       end
     end
     
-    # Sort the vals array
-    vals.sort!
-
     # Convert the array of cells to an array of integers
     vals.map! {|cell| cell.to_i }
 
@@ -184,14 +182,16 @@ class Sudoku
 
     nonet_vals = values_in_nonet(row_num, col_num)
 
-    # Merge the row, column and nonet values into a unique, sorted list.
-    house_vals = (row_vals | col_vals | nonet_vals).uniq.sort!
+    # Merge the row, column and nonet values into a unique list.
+    house_vals = (row_vals | col_vals | nonet_vals).uniq
 
     all_vals = (1..9).to_a
 
     # Potential values for this cell are all the values that don't conflict
     # with the actual values of other cells in this cell's house.
     potential_vals = all_vals - house_vals
+
+    potential_vals.sort!
 
   end
 
