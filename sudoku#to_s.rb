@@ -4,7 +4,7 @@ class Sudoku
   def to_s
     
     # Make a pretty string of the puzzle
-    visual_puzzle = 
+    pretty_puzzle = 
       # Format each row
       @puzzle.each_with_index.inject("") do |puzzle_string, (row, row_num)|
 
@@ -33,7 +33,7 @@ class Sudoku
 
       end
   
-    "\n" + visual_puzzle + "\n"
+    pretty_puzzle + "\n"
   
   end
 end

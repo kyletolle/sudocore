@@ -16,6 +16,9 @@ optparse = OptionParser.new do |opts|
   # OptionParser
 
   #TODO: Perhaps use a flag here for whether it's numeric or hex
+  #TODO: Option here for verbose output. Maybe even debugger, which would
+  #step through each iteration and make you hit enter to advance.
+  #TODO: Option to output start and stop times.
 
   # Displays the help screen
   opts.on('-h', '--help', 'Display this help screen') do
@@ -30,7 +33,15 @@ optparse.parse!
 filename = ARGV[0]
 
 #TODO: Use flag from command line to pass along whether this is hex or decimal
-sudoku = Sudoku.new(filename)
-puts "Starting puzzle at #{Time.now}"
-puts sudoku.solve.to_s
+puzzle = Sudoku.new(filename)
+puts "Starting puzzle at #{Time.now}\n\n"
+
+puts "Unsolved puzzle:"
+puts "#{puzzle.to_s}"
+
+puzzle.solve
+
+puts "Solved puzzle:"
+puts "#{puzzle.to_s}"
+
 puts "Solved puzzle at #{Time.now}"

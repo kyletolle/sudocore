@@ -26,6 +26,7 @@ class Sudoku
 
   require "./sudoku#initialize"
 
+  #TODO: What happens if solve is called twice?
   # Solves sudoku puzzle
   def solve
     #TODO: Determine which algorithm to use to solve the puzzle
@@ -33,14 +34,13 @@ class Sudoku
     # - Graph Coloring
     # - Some hybrid between the two?
     
+    puts "Solving..."
+    puts "This may take a while"
+    puts
+    
     #TODO: Do a not-dumb brute force first.
     #TODO: Then figure out how to abstract the algorithm away, so I can swap in a graph
     # coloring algorithm later!
-
-    #TODO:
-    puts "BEGIN SOLVING!"
-    puts self.to_s
-    #/TODO
     if valid?
       try_solve(0)
     else
@@ -202,8 +202,8 @@ class Sudoku
     #if print_on.include?(index)
     #  puts self.to_s
     #end
-    puts "Waiting to go ahead. Hit enter."
-    STDIN.gets
+    #puts "Waiting to go ahead. Hit enter."
+    #STDIN.gets
 
     ## Algorithm
     #
