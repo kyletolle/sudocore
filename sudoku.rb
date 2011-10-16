@@ -83,7 +83,7 @@ class Sudoku
 
   # Returns the house of cells from the row specified.
   def row(row_num)
-    raise NotImplementedException
+    @puzzle[row_num]
   end
 
   # Returns the house of cells from the nonet specified.
