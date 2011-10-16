@@ -1,4 +1,4 @@
-class Sudoku
+class Puzzle
   
   DEC_REGEX = /^[0-9]$/
   HEX_REGEX = /^[a-zA-z0-9]$/
@@ -24,7 +24,7 @@ class Sudoku
   end
 
 
-  require "./sudoku#initialize"
+  require "./puzzle#initialize"
 
   # Solves sudoku puzzle
   def solve
@@ -51,7 +51,7 @@ class Sudoku
   end
   
 
-  require "./sudoku#to_s"
+  require "./puzzle#to_s"
 
   # Add the current row to the puzzle
   def add_row

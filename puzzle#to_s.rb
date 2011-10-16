@@ -1,4 +1,4 @@
-class Sudoku
+class Puzzle
   # Returns string representation of sudoku puzzle for printing
   # @return string
   def to_s

@@ -15,9 +15,9 @@ class Cell
     #If so, store it. If not, raise error.
     #
     #TODO: How do we see what base the Cell should be in based on Sudoku's base?
-    if char =~ Sudoku::DEC_REGEX or char =~ Sudoku::BLANKS_REGEX
+    if char =~ Puzzle::DEC_REGEX or char =~ Puzzle::BLANKS_REGEX
       # Make all blank characters a period for readability in output.
-      if char =~ Sudoku::BLANKS_REGEX
+      if char =~ Puzzle::BLANKS_REGEX
         char.replace(".")
       end
       self.char = char
@@ -30,7 +30,7 @@ class Cell
 
   def blank?
     #TODO: How do we see what base the Cell should be in based on Sudoku's base?
-    return char =~ Sudoku::BLANKS_REGEX # whether char matches blanks regex
+    return char =~ Puzzle::BLANKS_REGEX # whether char matches blanks regex
   end
 
 
