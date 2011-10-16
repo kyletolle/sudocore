@@ -24,7 +24,9 @@ class Sudoku
 
   # Returns houses that represent each row in the puzzle
   def each_row
-    raise NotImplementedException
+    @puzzle.each do |row|
+      yield row
+    end
   end
 
   # Returns houses that represent each column in the puzzle
