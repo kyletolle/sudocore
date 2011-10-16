@@ -1,4 +1,4 @@
-class Sudoku
+class Puzzle
   
   # Represent the values of rows/columns that are part of the same nonet.
   NONET_RANGES = [0..2, 3..5 ,6..8]
@@ -134,7 +134,7 @@ class Sudoku
   ##--------------------------------------------
 
 
-  require "./sudoku#initialize"
+  require "./puzzle#initialize"
 
   #TODO: What happens if solve is called twice?
   # Solves sudoku puzzle
@@ -162,7 +162,7 @@ class Sudoku
   end
   
 
-  require "./sudoku#to_s"
+  require "./puzzle#to_s"
 
   # Add the current row to the puzzle
   def add_row

@@ -1,4 +1,4 @@
-class Sudoku
+class Puzzle
   #TODO: How can I make options optional and also a hash?
   # Parses sudoku puzzle file and builds data structure for solving.
   # @parm string file path to file containing sudoku puzzle

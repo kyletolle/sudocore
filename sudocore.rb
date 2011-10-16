@@ -1,6 +1,6 @@
 require 'optparse'
 
-require './sudoku'
+require './puzzle'
 
 # Text to 
 USAGE_TEXT = "Usage: ruby #{File.basename(__FILE__)} [options] file";
@@ -42,7 +42,7 @@ end
 filename = ARGV[0]
 
 #TODO: Use flag from command line to pass along whether this is hex or decimal
-puzzle = Sudoku.new(filename)
+puzzle = Puzzle.new(filename)
 puts "Starting puzzle at #{Time.now}\n\n"
 
 puts "Unsolved puzzle:"
