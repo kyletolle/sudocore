@@ -2,15 +2,17 @@ require 'optparse'
 
 require './sudoku'
 
+# Text to 
+USAGE_TEXT = "Usage: ruby #{File.basename(__FILE__)} [options] file";
+
 # Hold the parsed options
 options = {}
 
 # Define the options and their uses
 optparse = OptionParser.new do |opts|
-  # Set a banner message at the top of the help screen
-  opts.banner = "Usage: ruby #{File.basename(__FILE__)} [options] file"
 
-  #TODO: Enforce that a filename is required.
+  # Set a banner message at the top of the help screen
+  opts.banner = USAGE_TEXT
 
   #TODO: Need to handle invalid options and the exceptions thrown by
   # OptionParser
@@ -25,10 +27,17 @@ optparse = OptionParser.new do |opts|
     puts opts
     exit
   end
+
 end
 
 # Parse the command line, removing any options, leaving the filename we want
 optparse.parse!
+
+# If we don't have a filename after the options, show the usage text and exit
+if not ARGV.size == 1
+  puts USAGE_TEXT
+  exit
+end
 
 filename = ARGV[0]
 
