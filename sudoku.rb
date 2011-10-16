@@ -83,12 +83,23 @@ class Sudoku
 
   # Returns the house of cells from the row specified.
   def row(row_num)
-    @puzzle[row_num]
+    return @puzzle[row_num]
   end
+
 
   # Returns the house of cells from the nonet specified.
   def column(col_num)
-    raise NotImplementedException
+
+    # Start with an empty column
+    column = []
+
+    # Add the cell from the column index of each row.
+    @puzzle.each do |row|
+      column << row[col_num]
+    end
+
+    return column
+
   end
 
   # Returns the house of cells from the nonet specified.
