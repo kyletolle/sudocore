@@ -1,5 +1,8 @@
 class Sudoku
   
+  # Represent the values of rows/columns that are part of the same nonet.
+  NONET_RANGES = [0..2, 3..5 ,6..8]
+
   DEC_REGEX = /^[0-9]$/
   HEX_REGEX = /^[a-zA-z0-9]$/
   BLANKS_REGEX = /^[_\.]$/
@@ -54,12 +57,9 @@ class Sudoku
   # Returns houses that represent each nonet in the puzzle
   def each_nonet
     
-    # Represent the values of rows/columns that are part of the same nonet.
-    nonet_ranges = [0..2, 3..5 ,6..8]
-    
     # Loop over the ranges as row values and again as column values to cover all the nonets
-    nonet_ranges.each do |row_range|
-      nonet_ranges.each do |col_range|
+    NONET_RANGES.each do |row_range|
+      NONET_RANGES.each do |col_range|
 
         # Start with an empty nonet
         nonet_cells = []
@@ -83,12 +83,14 @@ class Sudoku
 
   # Returns the house of cells from the row specified.
   def row(row_num)
+    #TODO: Error check on the number to name sure it's in range.
     return @puzzle[row_num]
   end
 
 
   # Returns the house of cells from the nonet specified.
   def column(col_num)
+    #TODO: Error check on the number to name sure it's in range.
 
     # Start with an empty column
     column = []
@@ -104,7 +106,30 @@ class Sudoku
 
   # Returns the house of cells from the nonet specified.
   def nonet(nonet_num)
-    raise NotImplementedException
+    #TODO: Error check on the number to name sure it's in range.
+
+    ## Calculate row and column of nonet from the number
+    ##
+    row_num = nonet_num / 3;
+    col_num = nonet_num % 3;
+
+    # The row and column range which represents the nonet
+    row_range = NONET_RANGES[row_num]
+    col_range = NONET_RANGES[col_num]
+    
+    # Start with a blank nonet
+    nonet_cells = []
+
+    ## Add each cell in the nonet to the array
+    ##
+    row_range.each do |row|
+      col_range.each do |col|
+        nonet_cells << @puzzle[row][col]
+      end
+    end
+
+    return nonet_cells
+
   end
   ##--------------------------------------------
 
