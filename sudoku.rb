@@ -6,22 +6,46 @@ class Sudoku
 
   ## Names of classes from: http://en.wikipedia.org/wiki/Sudoku#Terminology
   ##
-  require "./cell"
+  require "./cell"  
+  require "./house"
 
-  class Row
+
+  ##--------------------------------------------
+  # Returns each cell in the puzzle
+  def each
+    raise NotImplementedException
   end
 
-
-  class Column
+  # Returns houses that represent each row in the puzzle
+  def each_row
+    raise NotImplementedException
   end
 
-
-  class Nonet
+  # Returns houses that represent each column in the puzzle
+  def each_column
+    raise NotImplementedException
   end
-  
 
-  class House
+  # Returns houses that represent each nonet in the puzzle
+  def each_nonet
+    raise NotImplementedException
   end
+
+  # Returns the house of cells from the row specified.
+  def row(row_num)
+    raise NotImplementedException
+  end
+
+  # Returns the house of cells from the nonet specified.
+  def column(col_num)
+    raise NotImplementedException
+  end
+
+  # Returns the house of cells from the nonet specified.
+  def nonet(nonet_num)
+    raise NotImplementedException
+  end
+  ##--------------------------------------------
 
 
   require "./sudoku#initialize"
