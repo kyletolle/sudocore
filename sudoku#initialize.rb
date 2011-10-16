@@ -43,12 +43,15 @@ class Sudoku
     ##
     rescue Errno::ENOENT
       puts "Error: Couldn't find the sudoku file."
+      exit
     
     rescue Errno::EACCES
       puts "Error: Access denied when accessing the sudoku file."
+      exit
 
     rescue Errno::EISDIR
       puts "Error: Given sudoku file was actually a directory, not a file."
+      exit
     exit
 
     @puzzle.each do |row| p row end
