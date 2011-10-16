@@ -210,7 +210,7 @@ class Sudoku
 
     # Only select the elements from the row that aren't blank
     row_vals =
-      @puzzle[row_num].select do |val|
+      row(row_num).select do |val|
         not val.blank?
       end
 
@@ -226,7 +226,7 @@ class Sudoku
     # Iterate over all rows to get the specific column values and
     # only select these values if they aren't blank
     col_vals =
-      @puzzle.map {|row| row[col_num] }.select {|val| not val.blank?}
+      column(col_num).select {|val| not val.blank?}
 
     # Convert the array of cells to an array of integers
     col_vals.map! {|cell| cell.to_i }
