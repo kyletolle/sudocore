@@ -13,8 +13,14 @@ class Sudoku
   ##--------------------------------------------
   # Returns each cell in the puzzle
   def each
-    raise NotImplementedException
+    # Return each cell of each row in the array
+    @puzzle.each do |row|
+      row.each do |cell|
+        yield cell
+      end
+    end
   end
+
 
   # Returns houses that represent each row in the puzzle
   def each_row
