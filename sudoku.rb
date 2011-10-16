@@ -29,15 +29,32 @@ class Sudoku
     end
   end
 
+
   # Returns houses that represent each column in the puzzle
   def each_column
-    raise NotImplementedException
+
+    # For all columns
+    (0..8).each do |col_num|
+      
+      # Start with an empty column
+      col_cells = []
+
+      # Add value of the column for each row to the column array
+      (0..8).each do |row_num|
+        col_cells << @puzzle[row_num][col_num]
+      end
+
+      # Yield the column
+      yield col_cells
+    end
+
   end
 
   # Returns houses that represent each nonet in the puzzle
   def each_nonet
     raise NotImplementedException
   end
+
 
   # Returns the house of cells from the row specified.
   def row(row_num)
