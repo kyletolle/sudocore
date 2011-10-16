@@ -50,9 +50,34 @@ class Sudoku
 
   end
 
+
   # Returns houses that represent each nonet in the puzzle
   def each_nonet
-    raise NotImplementedException
+    
+    # Represent the values of rows/columns that are part of the same nonet.
+    nonet_ranges = [0..2, 3..5 ,6..8]
+    
+    # Loop over the ranges as row values and again as column values to cover all the nonets
+    nonet_ranges.each do |row_range|
+      nonet_ranges.each do |col_range|
+
+        # Start with an empty nonet
+        nonet_cells = []
+
+        # Loop through each value in the row/column range
+        row_range.each do |row_num|
+          col_range.each do |col_num|
+            # Add the value for the cell in the nonet to the nonet array
+            nonet_cells << @puzzle[row_num][col_num]
+          end
+        end
+
+        # Yield the nonet
+        yield nonet_cells
+
+      end
+    end
+    
   end
 
 
