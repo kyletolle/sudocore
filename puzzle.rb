@@ -17,7 +17,6 @@ class Puzzle
   require "./house"
 
 
-  ##--------------------------------------------
   # Returns each cell in the puzzle
   def each
     # Return each cell of each row in the array
@@ -108,6 +107,7 @@ class Puzzle
 
   end
 
+
   # Returns the house of cells from the nonet specified.
   def nonet(nonet_num)
     #TODO: Error check on the number to name sure it's in range.
@@ -135,14 +135,17 @@ class Puzzle
     return nonet_cells
 
   end
-  ##--------------------------------------------
 
 
   require "./puzzle#initialize"
 
+  #
   #TODO: What happens if solve is called twice?
   # Solves sudoku puzzle
   def solve
+    
+    return if solved?
+
     #TODO: Determine which algorithm to use to solve the puzzle
     # - Brute Force
     # - Graph Coloring
