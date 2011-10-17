@@ -363,53 +363,35 @@ class Puzzle
   end
 
 
+  # Has the puzzle been solved? Meaning, do each of the rows, columns and nonets have values 1-9
   def solved?
-    #TODO:REMOVE ME!
-    #puts "Checking to see if puzzle is solved!"
-    #TODO: A puzzle is solved if each of the rows, columns and nonets have the values 1-9.
-    # Check to see if all the rows are valid
-    #TODO: Have a function that returns each row of the puzzle.
-    @puzzle.each do |row|
-      row_value = row.inject(0) {|sum, cell| sum + cell.to_i }
- 
-      # All rows must sum up t 45 if they are valid.
-      unless row_value == 45
-        puts "Invalid row sum!"
-        return false
-      end
+
+    # Return whether the total passed in is equal to the total for a valid house.
+    def is_valid_house_total?(total)
+      return total == 45
     end
 
-    # Check to see if all the columns are valid
-    #TODO: Have a function that returns each column of the puzzle
-    # This is the column number
-    (0..8).each do |col_num|
-      col_sum = 0
-      # We want to get the column indices from each row
-      (0..8).each do |row_num|
-        # Sum them up
-        col_sum += @puzzle[row_num][col_num].to_i
-      end
+    # Return the total of adding up all the cells in this house
+    def house_total(house)
+      return house.inject(0) {|sum, cell| sum + cell.to_i }
+    end
+    
+    ## Check whether all the houses in the puzzle have valid totals
+    ##
+    each_row do |row|
+      return false unless is_valid_house_total?(house_total(row))
+    end
 
-      # All columns must sum to 45 if they are valid.
-      unless col_sum == 45
-        puts "Invalid column sum!"
-        return false
-      end
+    each_column do |column|
+      return false unless is_valid_house_total?(house_total(column))
+    end
+
+    each_nonet do |nonet|
+      return false unless is_valid_house_total?(house_total(nonet))
     end
     
-    # Check to see if all the nonets are valid
-    #TODO: Have a function that returns each nonet of the puzzle
-    #
-    
-    #TODO:REMOVE THIS
-    # Check if any of the cells are still blank.
-    @puzzle.each do |row|
-      row.each do |cell|
-        return false if cell.blank?
-      end
-    end
-    true
   end
 
-  private :add_row, :add_cell, :try_solve, :valid?
+
+  private :add_row, :add_cell, :try_solve, :valid?, :solved?
 end
