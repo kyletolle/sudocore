@@ -1,10 +1,14 @@
 class Puzzle
   
   # Represent the values of rows/columns that are part of the same nonet.
+
   NONET_RANGES = [0..2, 3..5 ,6..8]
 
   DEC_REGEX = /^[0-9]$/
+  DEC_VALUES = (1..9).to_a
+
   HEX_REGEX = /^[a-zA-z0-9]$/
+
   BLANKS_REGEX = /^[_\.]$/
 
   ## Names of classes from: http://en.wikipedia.org/wiki/Sudoku#Terminology
@@ -237,50 +241,17 @@ class Puzzle
     nonet_num = (nonet_row * 3) + nonet_col
   end
   
-  
-  #TODO: Do we need to check in the values_in_* functions for uniq values?
-  # Return array of non-blank values in this cell's row
-  def values_in_row(row_num)
 
-    # Only interested in the non-blank cells from the nonet.
-    row_vals =
-      row(row_num).select do |val|
-        not val.blank?
-      end
-
-    # Convert the array of cells to an array of integers
-    row_vals.map! {|cell| cell.to_i }
-    
-  end
-
-
-  # Return array of non-blank values in this cell's column
-  def values_in_col(col_num)
-
-    # Only interested in the non-blank cells in the column.
-    col_vals =
-      column(col_num).select {|val| not val.blank?}
-
-    # Convert the array of cells to an array of integers
-    col_vals.map! {|cell| cell.to_i }
-
-  end
-
-
-  # Return array of non-blank values in this cell's nonet
-  def values_in_nonet(nonet_num)
-
-    # Only interested in the non-blank cells in the nonet.
-    nonet_vals = nonet(nonet_num).select do |val|
-      not val.blank?
+  # Return the house's non-blank values as integers.
+  def non_blank_house_values_as_integers(house)
+    house_vals = house.select do |cell|
+      not cell.blank?
     end
 
-    # Convert the array of cells to an array of integers
-    nonet_vals.map! {|cell| cell.to_i }
-
+    house_vals.map! {|cell| cell.to_i }
   end
-
-
+  
+  
   # Return a sorted, unique list of the possible values the cell at
   # puzzle's index position could be.
   def potential_values(index)
@@ -289,20 +260,21 @@ class Puzzle
     ## and eliminate them from the values that we can be.
     ## So we are left with only a list of potential values
     ##
-    row_vals = values_in_row(index_to_row(index))
+    row_of_index = row(index_to_row(index))
+    row_vals = non_blank_house_values_as_integers(row_of_index)
 
-    col_vals = values_in_col(index_to_col(index))
+    col_of_index = column(index_to_col(index))
+    col_vals = non_blank_house_values_as_integers(col_of_index)
 
-    nonet_vals = values_in_nonet(index_to_nonet(index))
+    nonet_of_index = nonet(index_to_nonet(index))
+    nonet_vals = non_blank_house_values_as_integers(nonet_of_index)
 
     # Merge the row, column and nonet values into a unique list.
     house_vals = (row_vals | col_vals | nonet_vals).uniq
 
-    all_vals = (1..9).to_a
-
     # Potential values for this cell are all the values that don't conflict
     # with the actual values of other cells in this cell's house.
-    potential_vals = all_vals - house_vals
+    potential_vals = DEC_VALUES - house_vals
 
     potential_vals.sort!
 
