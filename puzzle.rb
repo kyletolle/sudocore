@@ -193,22 +193,56 @@ class Puzzle
   end
 
   
-  # Map an index in the range 0..80 to the row and column indices for the puzzle
-  def index_to_indices(index)
-
-    row    = index / 9;
-    column = index % 9;
-
-    return row, column
-
+  # Maps cell index to row number
+  def index_to_row(index)
+    #TODO: Check for valid values.
+    row = index / 9
   end
 
+
+  # Maps cell index to column number
+  def index_to_col(index)
+    #TODO: Check for valid values.
+    column = index % 9
+  end
+
+
+  # Maps cell index to nonet number
+  def index_to_nonet(index)
+    #TODO: Check for valid values.
+
+    # Get the row and column for the cell
+    row = index_to_row(index)
+    col = index_to_col(index)
+
+    # Determine which nonet range includes this cell's row
+    nonet_row = 0
+    NONET_RANGES.each_with_index do |row_range, row_index|
+      if row_range.include?(row)
+        nonet_row = row_index
+        break
+      end
+    end
+
+    # Determine which nonet range includes this cell's column
+    nonet_col = 0
+    NONET_RANGES.each_with_index do |col_range, col_index|
+      if col_range.include?(col)
+        nonet_col = col_index
+        break
+      end
+    end
+
+    # Map the nonet row and column to a nonet index.
+    nonet_num = (nonet_row * 3) + nonet_col
+  end
+  
   
   #TODO: Do we need to check in the values_in_* functions for uniq values?
-  # Return sorted array of non-blank values in this cell's row
+  # Return array of non-blank values in this cell's row
   def values_in_row(row_num)
 
-    # Only select the elements from the row that aren't blank
+    # Only interested in the non-blank cells from the nonet.
     row_vals =
       row(row_num).select do |val|
         not val.blank?
@@ -220,11 +254,10 @@ class Puzzle
   end
 
 
-  # Return sorted array of non-blank values in this cell's column
+  # Return array of non-blank values in this cell's column
   def values_in_col(col_num)
 
-    # Iterate over all rows to get the specific column values and
-    # only select these values if they aren't blank
+    # Only interested in the non-blank cells in the column.
     col_vals =
       column(col_num).select {|val| not val.blank?}
 
@@ -235,43 +268,15 @@ class Puzzle
 
 
   # Return array of non-blank values in this cell's nonet
-  def values_in_nonet(row_num, col_num)
+  def values_in_nonet(nonet_num)
 
-    # Which range the row is in
-    case row_num
-    when 0..2
-      row_range = 0..2
-    when 3..5
-      row_range = 3..5
-    when 6..8
-      row_range = 6..8
+    # Only interested in the non-blank cells in the nonet.
+    nonet_vals = nonet(nonet_num).select do |val|
+      not val.blank?
     end
 
-    # Which range the column is in
-    case col_num
-    when 0..2
-      col_range = 0..2
-    when 3..5
-      col_range = 3..5
-    when 6..8
-      col_range = 6..8
-    end
-    
-    # The combination of row and column ranges gives the nonet for this cell.
-
-    vals = []
-
-    # Loop over the row range and column range in those rows for the nonet values
-    # Only interested in the non-blank values.
-    row_range.each do |row|
-      col_range.each do |col|
-        cell = @puzzle[row][col]
-        vals << cell unless cell.blank?
-      end
-    end
-    
     # Convert the array of cells to an array of integers
-    vals.map! {|cell| cell.to_i }
+    nonet_vals.map! {|cell| cell.to_i }
 
   end
 
@@ -280,17 +285,15 @@ class Puzzle
   # puzzle's index position could be.
   def potential_values(index)
 
-    ## Check the cell's house for values we can't be
+    ## Check the cell's houses for values we can't be
     ## and eliminate them from the values that we can be.
     ## So we are left with only a list of potential values
     ##
-    row_num, col_num = index_to_indices(index)
+    row_vals = values_in_row(index_to_row(index))
 
-    row_vals = values_in_row(row_num)
+    col_vals = values_in_col(index_to_col(index))
 
-    col_vals = values_in_col(col_num)
-
-    nonet_vals = values_in_nonet(row_num, col_num)
+    nonet_vals = values_in_nonet(index_to_nonet(index))
 
     # Merge the row, column and nonet values into a unique list.
     house_vals = (row_vals | col_vals | nonet_vals).uniq
@@ -343,9 +346,10 @@ class Puzzle
       return solved?
     end
 
-    row, col = index_to_indices(index)
+    row_num = index_to_row(index)
+    col_num = index_to_col(index)
     
-    cell = @puzzle[row][col]
+    cell = @puzzle[row_num][col_num]
 
     if cell.blank?
       p_vals = potential_values(index)
@@ -435,5 +439,5 @@ class Puzzle
     true
   end
 
-  private :add_row, :add_cell, :try_solve, :valid?, :index_to_indices
+  private :add_row, :add_cell, :try_solve, :valid?
 end
