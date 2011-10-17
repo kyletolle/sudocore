@@ -6,7 +6,7 @@ class Puzzle
   def initialize(filename)
     
     #TODO: Add whether we want to use decimal or hex digits.
-    @digit_regex = DEC_REGEX
+    @digit_regex = DECIMAL_REGEX
 
     # Characters to represent valid blank characters in the puzzle
     @blank_regex = BLANKS_REGEX

@@ -4,8 +4,8 @@ class Puzzle
 
   NONET_RANGES = [0..2, 3..5 ,6..8]
 
-  DEC_REGEX = /^[0-9]$/
-  DEC_VALUES = (1..9).to_a
+  DECIMAL_REGEX = /^[0-9]$/
+  DECIMAL_VALUES = (1..9).to_a
 
   HEX_REGEX = /^[a-zA-z0-9]$/
 
@@ -274,7 +274,7 @@ class Puzzle
 
     # Potential values for this cell are all the values that don't conflict
     # with the actual values of other cells in this cell's house.
-    potential_vals = DEC_VALUES - house_vals
+    potential_vals = DECIMAL_VALUES - house_vals
 
     potential_vals.sort!
 

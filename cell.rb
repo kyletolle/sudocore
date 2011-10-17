@@ -15,7 +15,7 @@ class Cell
     #If so, store it. If not, raise error.
     #
     #TODO: How do we see what base the Cell should be in based on Sudoku's base?
-    if char =~ Puzzle::DEC_REGEX or char =~ Puzzle::BLANKS_REGEX
+    if char =~ Puzzle::DECIMAL_REGEX or char =~ Puzzle::BLANKS_REGEX
       # Make all blank characters a period for readability in output.
       if char =~ Puzzle::BLANKS_REGEX
         char.replace(".")
