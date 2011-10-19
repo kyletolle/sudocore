@@ -17,6 +17,10 @@ class Puzzle
     @puzzle = [] #Puzzle.new
     @current_row = nil
 
+    #TODO: Allow different algorithms to be chosen
+    require './bruteforce'
+    @algorithm = BruteForce.new
+
     # Read in the file with the puzzle
     File.open(filename) do |file|
       file.each do |line|
