@@ -1,3 +1,4 @@
+# Adds the to_s method to the Puzzle class
 class Puzzle
   # Returns string representation of sudoku puzzle for printing
   # @return string

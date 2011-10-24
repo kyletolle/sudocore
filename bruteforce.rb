@@ -4,16 +4,13 @@ require './algorithm'
 class BruteForce < Algorithm
   
 
+  # Solves the given sudoku puzzle
   def solve(puzzle)
     @puzzle = puzzle
 
+    # If the puzzle has already been solved, don't solve it again, just return.
     return if @puzzle.solved?
 
-    #TODO: Determine which algorithm to use to solve the puzzle
-    # - Brute Force
-    # - Graph Coloring
-    # - Some hybrid between the two?
-    
     puts "Solving..."
     puts "This may take a while"
     puts
@@ -26,7 +23,7 @@ class BruteForce < Algorithm
 
   # Brute force solution to solve the puzzle starting at index.
   def try_solve(index)
-    #TODO:REMOVE ME!
+    #TODO: Should this be made into some debug functionality?
     #print_on = [0]
     #if print_on.include?(index)
     #  puts @puzzle
@@ -39,11 +36,13 @@ class BruteForce < Algorithm
       return @puzzle.solved?
     end
 
+    # Get the row and column numbers for this cell's base index.
     row_num = index_to_row(index)
     col_num = index_to_col(index)
     
     cell = @puzzle.cell(row_num, col_num)
 
+    # If the cell is blank, we need to process it.
     if cell.blank?
       p_vals = potential_values(index)
 
@@ -67,6 +66,7 @@ class BruteForce < Algorithm
       cell.char = "."
       return false
 
+    # If the cell isn't blank, we process the next cell
     else
       try_solve(index.next)
     end

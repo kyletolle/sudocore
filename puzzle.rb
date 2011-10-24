@@ -22,12 +22,14 @@ class Puzzle
   require "./house"
 
 
+  # Bring in other methods
   require "./puzzle#initialize"
+  require "./puzzle#to_s"
 
 
-  # Returns each cell in the puzzle
+  # Yields each cell in the puzzle
   def each
-    # Return each cell of each row in the array
+    # Yield each cell of each row in the array
     @puzzle.each do |row|
       row.each do |cell|
         yield cell
@@ -36,7 +38,7 @@ class Puzzle
   end
 
 
-  # Returns houses that represent each row in the puzzle
+  # Yields houses that represent each row in the puzzle
   def each_row
     @puzzle.each do |row|
       yield row
@@ -44,7 +46,7 @@ class Puzzle
   end
 
 
-  # Returns houses that represent each column in the puzzle
+  # Yields houses that represent each column in the puzzle
   def each_column
 
     # For all columns
@@ -65,7 +67,7 @@ class Puzzle
   end
 
 
-  # Returns houses that represent each nonet in the puzzle
+  # Yields houses that represent each nonet in the puzzle
   def each_nonet
     
     # Loop over the ranges as row values and again as column values to cover all the nonets
@@ -94,6 +96,7 @@ class Puzzle
 
   # Returns the cell from the position [row][column] specified.
   def cell(row_num, col_num)
+    #TODO: Error check on the numbers to name sure it's in range.
     return @puzzle[row_num][col_num]
   end
 
@@ -166,8 +169,6 @@ class Puzzle
   end
   
 
-  require "./puzzle#to_s"
-
   # Add the current row to the puzzle
   def add_row
 
@@ -197,6 +198,7 @@ class Puzzle
   end
 
   
+  # Check to make sure the puzzle, as read in from the file, is valid and can be solved.
   def valid?
 
     unless @puzzle.size == 9

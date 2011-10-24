@@ -1,9 +1,11 @@
+# Adds the initialize method to the Puzzle class
 class Puzzle
-  #TODO: How can I make options optional and also a hash?
+
   # Parses sudoku puzzle file and builds data structure for solving.
   # @parm string file path to file containing sudoku puzzle
   #TODO: @parm for options
   def initialize(filename)
+    #TODO: How can I make passed in options optional and also a hash?
     
     #TODO: Add whether we want to use decimal or hex digits.
     @digit_regex = DECIMAL_REGEX
@@ -13,7 +15,6 @@ class Puzzle
 
     ## Read and parse in the puzzle now
     ##
-    #TODO: I think I'll want to use a puzzle class to abstract things away.
     @puzzle = [] #Puzzle.new
     @current_row = nil
 
@@ -21,18 +22,22 @@ class Puzzle
     require './bruteforce'
     @algorithm = BruteForce.new
 
-    # Read in the file with the puzzle
+    # Read in the file containing the puzzle
     File.open(filename) do |file|
+      # Read in each line of the file and add the row to the puzzle
       file.each do |line|
+        # Create a puzzle cell for each character of the line
         line.chomp.each_char do |char| 
-          # Add this cell to the puzzle
+          # Add this cell to the row
           add_cell(Cell.new(char))
         end
 
+        # Add this row to the puzzle
         add_row
       end
     end
 
+    #TODO: Move this error handling to another area for consolidation.
     # Catch argument errors
     rescue ArgumentError => e
       puts "Error: #{e.message}"
@@ -56,9 +61,7 @@ class Puzzle
     rescue Errno::EISDIR
       puts "Error: Given sudoku file was actually a directory, not a file."
       exit
-    exit
 
-    @puzzle.each do |row| p row end
   end
   
 end
