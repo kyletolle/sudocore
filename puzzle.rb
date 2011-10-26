@@ -158,6 +158,9 @@ class Puzzle
   # Solves sudoku puzzle
   def solve
     
+    # If the puzzle has already been solved, don't solve it again, just return.
+    return if solved?
+
     #TODO: Need to catch if a row doesn't have 9 cells.
     if valid?
       @algorithm.solve(self)

@@ -8,9 +8,6 @@ class BruteForce < Algorithm
   def solve(puzzle)
     @puzzle = puzzle
 
-    # If the puzzle has already been solved, don't solve it again, just return.
-    return if @puzzle.solved?
-
     puts "Solving..."
     puts "This may take a while"
     puts
