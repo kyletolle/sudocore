@@ -15,11 +15,13 @@ Then we're off to the races! It'll solve most puzzles quick-like.
 Dependencies
 --------
 modularity
-      [sudo] gem install modularity
+
+    [sudo] gem install modularity
 
 ToDo
 --------
-There are a lot of improvements to be had
+There are a lot of improvements to be had:
+
 - Better error handling
 - More comments and code refactoring
 - More brute-forcey brute force algorithm
