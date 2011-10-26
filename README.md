@@ -14,7 +14,7 @@ Then we're off to the races! It'll solve most puzzles quick-like.
 
 Dependencies
 --------
-[modularity]:
+[modularity][1]
 
         [sudo] gem install modularity
 
@@ -31,4 +31,4 @@ There are a lot of improvements to be had:
 - Performance enhancements
 
 Don't worry, you just sit back and I'll take care of that. Hell, go out for a drive in your sweet new ride! You deserve it.
-[modularity]: https://github.com/makandra/modularity
+[1]: https://github.com/makandra/modularity
