@@ -154,12 +154,11 @@ class Puzzle
   end
 
 
-  #TODO: What happens if solve is called twice?
   # Solves sudoku puzzle
   def solve
     
     # If the puzzle has already been solved, don't solve it again, just return.
-    return if solved?
+    return self if solved?
 
     #TODO: Need to catch if a row doesn't have 9 cells.
     if valid?
