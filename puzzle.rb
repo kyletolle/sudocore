@@ -26,13 +26,15 @@ class Puzzle
 
   ## Bring in other methods
   ##
-  require './puzzle/initialize_trait.rb'
+  require './puzzle/creation_trait.rb'
   require './puzzle/each_methods_trait.rb'
-  require "./puzzle/to_s_trait.rb"
+  require "./puzzle/output_trait.rb"
+  require "./puzzle/houses_trait.rb"
 
-  does "puzzle/initialize"
+  does "puzzle/creation"
+  does "puzzle/output"
+
   does "puzzle/each_methods"
-  does "puzzle/to__s"
 
   # Returns the cell from the position [row][column] specified.
   def cell(row_num, col_num)
@@ -40,60 +42,8 @@ class Puzzle
     return @puzzle[row_num][col_num]
   end
 
+  does "puzzle/houses"
   
-  # Returns the house of cells from the row specified.
-  def row(row_num)
-    #TODO: Error check on the number to name sure it's in range.
-    return @puzzle[row_num]
-  end
-
-
-  # Returns the house of cells from the nonet specified.
-  def column(col_num)
-    #TODO: Error check on the number to name sure it's in range.
-
-    # Start with an empty column
-    column = []
-
-    # Add the cell from the column index of each row.
-    @puzzle.each do |row|
-      column << row[col_num]
-    end
-
-    return column
-
-  end
-
-
-  # Returns the house of cells from the nonet specified.
-  def nonet(nonet_num)
-    #TODO: Error check on the number to name sure it's in range.
-
-    ## Calculate row and column of nonet from the number
-    ##
-    row_num = nonet_num / 3;
-    col_num = nonet_num % 3;
-
-    # The row and column range which represents the nonet
-    row_range = NONET_RANGES[row_num]
-    col_range = NONET_RANGES[col_num]
-    
-    # Start with a blank nonet
-    nonet_cells = []
-
-    ## Add each cell in the nonet to the array
-    ##
-    row_range.each do |row|
-      col_range.each do |col|
-        nonet_cells << @puzzle[row][col]
-      end
-    end
-
-    return nonet_cells
-
-  end
-
-
   # Solves sudoku puzzle
   def solve
     

@@ -1,5 +1,5 @@
-# Adds the initialize method to the Puzzle class
-module Puzzle::InitializeTrait
+# Adds the initialize method to Puzzle.
+module Puzzle::CreationTrait
   as_trait do
 
     # Parses sudoku puzzle file and builds data structure for solving.

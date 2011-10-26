@@ -1,5 +1,5 @@
-# Adds the to_s method to the Puzzle class
-module Puzzle::To_sTrait
+# Adds the to_s method to Puzzle.
+module Puzzle::OutputTrait
   as_trait do
     # Returns string representation of sudoku puzzle for printing
     # @return string

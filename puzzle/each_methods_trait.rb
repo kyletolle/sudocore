@@ -1,3 +1,4 @@
+# Adds each and each_[row/column/nonet] methods to Puzzle.
 module Puzzle::EachMethodsTrait
   as_trait do
     # Yields each cell in the puzzle
