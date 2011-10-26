@@ -15,17 +15,17 @@ Then we're off to the races! It'll solve most puzzles quick-like.
 Dependencies
 --------
 modularity
-    [sudo] gem install modularity
+      [sudo] gem install modularity
 
 ToDo
 --------
-There are a lot of improvements to be had:
-* Better error handling
-* More comments and code refactoring
-* More brute-forcey brute force algorithm
-* Solve 16x16 solve hexadecimal puzzles
-* Bring in other algorithms to solve the puzzle with
-* A slew of command line switches to pass in to alter behavior of the program
-* Performance enhancements
+There are a lot of improvements to be had
+- Better error handling
+- More comments and code refactoring
+- More brute-forcey brute force algorithm
+- Solve 16x16 solve hexadecimal puzzles
+- Bring in other algorithms to solve the puzzle with
+- A slew of command line switches to pass in to alter behavior of the program
+- Performance enhancements
 
 Don't worry, you just sit back and I'll take care of that. Hell, go out for a drive in your sweet new ride! You deserve it.
