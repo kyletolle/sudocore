@@ -1,6 +1,7 @@
 # Adds row/column/nonet methods to Puzzle.
 module Puzzle::HousesTrait
   as_trait do
+
     # Returns the house of cells from the row specified.
     # The number must be in the range for the base of the puzzle.
     def row(row_num)
@@ -11,7 +12,7 @@ module Puzzle::HousesTrait
     # Returns the house of cells from the nonet specified.
     # The number must be in the range for the base of the puzzle.
     def column(col_num)
-      # Start with an empty column
+      # Start with an empty column.
       column = []
 
       # Add the cell from the column index of each row.
@@ -26,19 +27,19 @@ module Puzzle::HousesTrait
     # Returns the house of cells from the nonet specified.
     # The number must be in the range for the base of the puzzle.
     def nonet(nonet_num)
-      ## Calculate row and column of nonet from the number
+      ## Calculate row and column of nonet from the number.
       ##
       row_num = nonet_num / 3;
       col_num = nonet_num % 3;
 
-      # The row and column range which represents the nonet
+      # The row and column range which represents the nonet.
       row_range = NONET_RANGES[row_num]
       col_range = NONET_RANGES[col_num]
 
-      # Start with a blank nonet
+      # Start with a blank nonet.
       nonet_cells = []
 
-      ## Add each cell in the nonet to the array
+      ## Add each cell in the nonet to the array.
       ##
       row_range.each do |row|
         col_range.each do |col|
@@ -48,5 +49,6 @@ module Puzzle::HousesTrait
 
       return nonet_cells
     end
+
   end
 end

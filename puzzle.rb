@@ -3,7 +3,6 @@ require 'modularity'
 # The data structure for the Sudoku Puzzle.
 # Separate from the algorithm used to solve the puzzles.
 class Puzzle
-
   # The values of rows/columns that are part of the same nonet.
   NONET_RANGES = [0..2, 3..5 ,6..8]
 
@@ -23,6 +22,7 @@ class Puzzle
 
   ## Bring in other methods.
   ##
+
   require './puzzle/creation_trait.rb'
   require './puzzle/each_methods_trait.rb'
   require "./puzzle/output_trait.rb"
@@ -30,8 +30,8 @@ class Puzzle
 
   does "puzzle/creation"
   does "puzzle/output"
-
   does "puzzle/each_methods"
+
 
   # Returns the cell from the position [row][column] specified.
   # Row and column numbers must be in the range for the base of the puzzle.
@@ -39,7 +39,9 @@ class Puzzle
     return @puzzle[row_num][col_num]
   end
 
+
   does "puzzle/houses"
+
 
   # Solves a valid sudoku puzzle.
   def solve
@@ -75,7 +77,7 @@ class Puzzle
 
   # Check to make sure the puzzle, as read in from the file, is valid and can be solved.
   def valid?
-    # Valid puzzle has 9 rows
+    # Valid puzzle has 9 rows.
     unless @puzzle.size == 9
       raise RuntimeError, "Sudoku puzzle must have 9 rows."
     end
@@ -113,6 +115,7 @@ class Puzzle
 
     ## Check whether all the houses in the puzzle have valid totals.
     ##
+
     each_row do |row|
       return false unless is_valid_house_total?(house_total(row))
     end

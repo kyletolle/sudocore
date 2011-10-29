@@ -1,4 +1,4 @@
-## Sudocore - A Sudoku solver written in Ruby
+## Sudocore - A Sudoku solver written in Ruby.
 ##
 
 # Parse the command line options and get the filename that holds the puzzle.
@@ -6,7 +6,7 @@ require './command_line_parser'
 cmd_parser = CommandLineParser.new
 file = cmd_parser.parse!.file
 
-# Create the puzzle with the file
+# Create the puzzle with the file.
 require './puzzle'
 puzzle = Puzzle.new(file)
 

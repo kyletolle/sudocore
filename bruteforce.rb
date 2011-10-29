@@ -1,8 +1,8 @@
 require './algorithm'
 
-# An implementation of Algorithm that solves Sudoku via brute force
+# An implementation of Algorithm that solves Sudoku via brute force.
 class BruteForce < Algorithm
-  # Solves the given sudoku puzzle
+  # Solves the given sudoku puzzle.
   def solve(puzzle)
     @puzzle = puzzle
 
@@ -44,10 +44,10 @@ class BruteForce < Algorithm
       return false if p_vals.empty?
 
       p_vals.each do |p_val|
-        # Set this cell to the potential value
+        # Set this cell to the potential value.
         cell.char = p_val
 
-        # And try to solve the rest of the puzzle
+        # And try to solve the rest of the puzzle.
         result = try_solve(index.next)
         if result
           return true
@@ -61,7 +61,7 @@ class BruteForce < Algorithm
       cell.char = "."
       return false
 
-    # If the cell isn't blank, we process the next cell
+    # If the cell isn't blank, we process the next cell.
     else
       try_solve(index.next)
     end
@@ -70,27 +70,27 @@ class BruteForce < Algorithm
   ## For index_to_* methods, the following must be true for valid results:
   ## 0 <= index < (base*base)
   ## ie. The index must be greater than or equal zero but less than the number of cells
-  ##     in the puzzle (the index is zero based)
+  ##     in the puzzle (the index is zero based).
   ##
-  # Maps cell index to row number
+  # Maps cell index to row number.
   def index_to_row(index)
     row = index / 9
   end
 
 
-  # Maps cell index to column number
+  # Maps cell index to column number.
   def index_to_col(index)
     column = index % 9
   end
 
 
-  # Maps cell index to nonet number
+  # Maps cell index to nonet number.
   def index_to_nonet(index)
-    # Get the row and column for the cell
+    # Get the row and column for the cell.
     row = index_to_row(index)
     col = index_to_col(index)
 
-    # Determine which nonet range includes this cell's row
+    # Determine which nonet range includes this cell's row.
     nonet_row = 0
     Puzzle::NONET_RANGES.each_with_index do |row_range, row_index|
       if row_range.include?(row)
@@ -99,7 +99,7 @@ class BruteForce < Algorithm
       end
     end
 
-    # Determine which nonet range includes this cell's column
+    # Determine which nonet range includes this cell's column.
     nonet_col = 0
     Puzzle::NONET_RANGES.each_with_index do |col_range, col_index|
       if col_range.include?(col)
@@ -128,7 +128,7 @@ class BruteForce < Algorithm
   def potential_values(index)
     ## Check the cell's houses for values we can't be
     ## and eliminate them from the values that we can be.
-    ## So we are left with only a list of potential values
+    ## We are left with only a list of potential values.
     ##
     row_of_index = @puzzle.row(index_to_row(index))
     row_vals = non_blank_house_values_as_integers(row_of_index)
