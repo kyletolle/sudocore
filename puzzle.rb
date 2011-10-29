@@ -52,6 +52,10 @@ class Puzzle
     @algorithm.solve(self) if valid?
 
     self
+  # Catch puzzle validity errors
+  rescue => e
+    puts "Error: #{e.message}"
+    exit
   end
 
 
