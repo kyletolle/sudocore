@@ -49,6 +49,8 @@ class CommandLineParser
 
     self
 
+  # Any errors raised from pasring command line will output the error message,
+  # print the usage text and then exit program.
   rescue => e
     puts "Error: #{e.message}\n\n"
     puts @optparse
