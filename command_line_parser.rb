@@ -4,9 +4,6 @@ require 'optparse'
 class CommandLineParser
   attr_reader :file, :switches
   
-  # Text describing how to run the program.
-  USAGE_TEXT = "Usage: ruby #{File.basename(__FILE__)} [options] file";  
-
 
   # Set up the command line parser.
   def initialize
@@ -15,18 +12,16 @@ class CommandLineParser
    
     # Define the options and their uses.
     @optparse = OptionParser.new do |opts|
-      # Set a banner message at the top of the help screen.
-      opts.banner = USAGE_TEXT
+      # Set a banner message at the top of the help screen describing how to run the program.
+      opts.banner = "Usage: ruby sudocore.rb [options] file"
 
       opts.on('-t', '--time', "Print out the time it took to solve the puzzle.") do |t|
         @switches[:time] = true;
       end
    
-      #TODO: Need to handle invalid options and the exceptions thrown by OptionParser.
       #TODO: Perhaps use a flag here for whether it's numeric or hex.
       #TODO: Option here for verbose output. Maybe even debugger, which would
       #step through each iteration and make you hit enter to advance.
-      #TODO: Option to output start and stop times.
    
       # Displays the help screen.
       opts.on('-h', '--help', 'Display this help screen') do
@@ -43,14 +38,20 @@ class CommandLineParser
     @optparse.parse!
    
     # If we don't have a file after the options, show the usage text and exit.
-    if not ARGV.size == 1
-      puts USAGE_TEXT
-      exit
+    if ARGV.size < 1
+      raise ArgumentError, "Missing required file."
+    elsif ARGV.size > 1
+      raise ArgumentError, "Too many arguments."
     end
    
     # The file is the argument left after parsing.
     @file = ARGV[0]
 
     self
+
+  rescue => e
+    puts "Error: #{e.message}\n\n"
+    puts @optparse
+    exit
   end
 end
