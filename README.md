@@ -31,4 +31,12 @@ There are a lot of improvements to be had:
 - Performance enhancements
 
 Don't worry, you just sit back and I'll take care of that. Hell, go out for a drive in your sweet new ride! You deserve it.
+
+Design Notes
+--------
+This [article on duck typing](http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-talk/100511) influenced some of my decisions regarding errors.
+
+I will not try to predict every way in which someone might misuse methods. Methods will document any assumptions/requirements and it will be up to the user to comply. If they do not comply, they'll get an error. This will make development and maintenenace easier. And I'll likely be the only user. Errors will still be caught and should still be pretty easy to figure out.
+
+I'll also use Duck typing. Trying to ween myself off the static-typed mindset. Again, errors will be evident here if a method fails later because the wrong object was used.
 [1]: https://github.com/makandra/modularity
