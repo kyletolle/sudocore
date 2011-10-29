@@ -1,9 +1,6 @@
 # Data structure to represent an individual cell in the puzzle.
 class Cell
-
-  # Give access to other cells to read the character, so we can sort.
   attr_reader :char
-  protected :char
 
 
   # Create a cell with the given character.

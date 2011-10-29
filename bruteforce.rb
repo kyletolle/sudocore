@@ -39,18 +39,30 @@ class BruteForce < Algorithm
 
     # If the cell is blank, we need to process it.
     if cell.blank?
+      # Keep track of the original character so we can assign it again later if none of the
+      # potential values here work out and we need to backtrack through the puzzle.
+      original_char = cell.char
+
+      # List of potential values that this index could be.
       p_vals = potential_values(index)
 
+      # If there are no potential values, we have an invalid solution.
+      # Returning false lets us backtrack.
       return false if p_vals.empty?
 
+      # For each of the potential values, we try assinging the value here 
+      # and solving the rest of the puzzle with this guess.
       p_vals.each do |p_val|
         # Set this cell to the potential value.
         cell.char = p_val
 
         # And try to solve the rest of the puzzle.
         result = try_solve(index.next)
+        # If the guess worked out, then we're done solving because we have a valid solution.
         if result
           return true
+
+        # Guess didn't work out, so we try the next potential value.
         else
           next
         end
@@ -58,7 +70,8 @@ class BruteForce < Algorithm
 
       # If we didn't solve the puzzle with these values, some value before us is wrong.
       # Resets the value here to be blank so it can be changed later.
-      cell.char = "."
+      cell.char = original_char
+      # Return false so we can backtrack and try other values in previous cells.
       return false
 
     # If the cell isn't blank, we process the next cell.
