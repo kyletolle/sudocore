@@ -2,7 +2,7 @@ require 'optparse'
 
 # Parses the command line switches and returns options and the file.
 class CommandLineParser
-  attr_reader :file
+  attr_reader :file, :switches
   
   # Text describing how to run the program.
   USAGE_TEXT = "Usage: ruby #{File.basename(__FILE__)} [options] file";  
@@ -11,12 +11,16 @@ class CommandLineParser
   # Set up the command line parser.
   def initialize
     # Hold the parsed options.
-    @options = {}
+    @switches = {}
    
     # Define the options and their uses.
     @optparse = OptionParser.new do |opts|
       # Set a banner message at the top of the help screen.
       opts.banner = USAGE_TEXT
+
+      opts.on('-t', '--time', "Print out the time it took to solve the puzzle.") do |t|
+        @switches[:time] = true;
+      end
    
       #TODO: Need to handle invalid options and the exceptions thrown by OptionParser.
       #TODO: Perhaps use a flag here for whether it's numeric or hex.
