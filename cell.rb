@@ -1,81 +1,83 @@
-# Data structure to represent an individual Cell in the puzzle
+# Data structure to represent an individual cell in the puzzle.
 class Cell
 
-  # We need other Cell objects to read the char for sorting to work
+  # Give access to other cells to read the character, so we can sort.
   attr_reader :char
   protected :char
 
-  # Set the Cell's character
+
+  # Create a cell with the given character.
+  # The character must be in the puzzle's base.
+  def initialize(char)
+    self.char = char
+  end
+
+
+  # Set the Cell's character.
+  # The character must be in the puzzle's base.
   def char=(val)
-    #TODO: Add in error checking?
     @char = val.to_s
   end
 
-  # Create a Cell with the given character
-  def initialize(char)
 
+  # Return whether the cell is blank or not.
+  def blank?
+    # Return whether the cell is a blank entry.
+    return char =~ Puzzle::BLANKS_REGEX
+  end
+
+
+  def valid?
     #TODO: Check to see if char matches the digit or blank regexes.
-    #If so, store it. If not, raise error.
-    #
     #TODO: How do we see what base the Cell should be in based on Sudoku's base?
-    if char =~ Puzzle::DECIMAL_REGEX or char =~ Puzzle::BLANKS_REGEX
-      # Make all blank characters a period for readability in output.
-      if char =~ Puzzle::BLANKS_REGEX
-        char.replace(".")
-      end
-      self.char = char
-    else
+    unless char =~ Puzzle::DECIMAL_REGEX or char =~ Puzzle::BLANKS_REGEX
       raise ArgumentError, "Each character of the Sudoku puzzle's Cells must be a valid character or blank entry."
     end
-
   end
 
 
-  # Return whether the Cell is blank or not
-  def blank?
-    #TODO: How do we see what base the Cell should be in based on Sudoku's base?
-    return char =~ Puzzle::BLANKS_REGEX # whether char matches blanks regex
-  end
-
-
-  # Convert a Cell to a string
+  # Convert a cell to a string.
   def to_s
     char.to_s
   end
 
 
-  # Convert a Cell to an integer
+  # Convert a cell to an integer.
+  # Blank cells will return 0.
   def to_i
     char.to_i
   end
 
-  
-  # Allows sorting of Cells
+
+  # Returns the comparison of one cell to another.
+  # Allows sorting of cells.
   def <=>(other)
+    # Spaceship operator of the cell is the spaceship operator of the character.
     char <=> other.char
   end
 
 
-  ## The following functions are needed for Array#uniq to work on an array of Cells
+  ## The following functions are needed for Array#uniq to work on an array of cells.
   ##
 
-  # Returns the hash of the Cell
+  # Returns the hash of the cell.
   def hash
-    # Hash of the Cell is the hash of the character.
+    # Hash of the cell is the hash of the character.
     char.hash
   end
 
-  
-  # Returns whether the Cell is equal to the other Cell.
+
+  # Returns whether the cell is equal to the other cell.
   def eql?(comparee)
     self == comparee
   end
 
 
-  # Returns whether the Cell is equal to the other Cell.
+  # Returns whether the cell is equal to the other cell.
   def ==(comparee)
-    # A Cell is equal to another if the Cell's characters are equal.
+    # A cell is equal to another if the cell's characters are equal.
     char == comparee.char
   end
+
 
 end

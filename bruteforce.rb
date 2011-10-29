@@ -2,8 +2,6 @@ require './algorithm'
 
 # An implementation of Algorithm that solves Sudoku via brute force
 class BruteForce < Algorithm
-  
-
   # Solves the given sudoku puzzle
   def solve(puzzle)
     @puzzle = puzzle
@@ -67,23 +65,53 @@ class BruteForce < Algorithm
     else
       try_solve(index.next)
     end
-
   end
   
-
+  ## For index_to_* methods, the following must be true for valid results:
+  ## 0 <= index < (base*base)
+  ## ie. The index must be greater than or equal zero but less than the number of cells
+  ##     in the puzzle (the index is zero based)
+  ##
   # Maps cell index to row number
   def index_to_row(index)
-    #TODO: Check for valid values.
     row = index / 9
   end
 
 
   # Maps cell index to column number
   def index_to_col(index)
-    #TODO: Check for valid values.
     column = index % 9
   end
 
+
+  # Maps cell index to nonet number
+  def index_to_nonet(index)
+    # Get the row and column for the cell
+    row = index_to_row(index)
+    col = index_to_col(index)
+
+    # Determine which nonet range includes this cell's row
+    nonet_row = 0
+    Puzzle::NONET_RANGES.each_with_index do |row_range, row_index|
+      if row_range.include?(row)
+        nonet_row = row_index
+        break
+      end
+    end
+
+    # Determine which nonet range includes this cell's column
+    nonet_col = 0
+    Puzzle::NONET_RANGES.each_with_index do |col_range, col_index|
+      if col_range.include?(col)
+        nonet_col = col_index
+        break
+      end
+    end
+
+    # Map the nonet row and column to a nonet index.
+    nonet_num = (nonet_row * 3) + nonet_col
+  end
+ 
 
   # Return the house's non-blank values as integers.
   def non_blank_house_values_as_integers(house)
@@ -98,38 +126,6 @@ class BruteForce < Algorithm
   # Return a sorted, unique list of the possible values the cell at
   # puzzle's index position could be.
   def potential_values(index)
-
-    # Maps cell index to nonet number
-    def index_to_nonet(index)
-      #TODO: Check for valid values.
-
-      # Get the row and column for the cell
-      row = index_to_row(index)
-      col = index_to_col(index)
-
-      # Determine which nonet range includes this cell's row
-      nonet_row = 0
-      Puzzle::NONET_RANGES.each_with_index do |row_range, row_index|
-        if row_range.include?(row)
-          nonet_row = row_index
-          break
-        end
-      end
-
-      # Determine which nonet range includes this cell's column
-      nonet_col = 0
-      Puzzle::NONET_RANGES.each_with_index do |col_range, col_index|
-        if col_range.include?(col)
-          nonet_col = col_index
-          break
-        end
-      end
- 
-      # Map the nonet row and column to a nonet index.
-      nonet_num = (nonet_row * 3) + nonet_col
-    end
- 
-
     ## Check the cell's houses for values we can't be
     ## and eliminate them from the values that we can be.
     ## So we are left with only a list of potential values
@@ -151,7 +147,6 @@ class BruteForce < Algorithm
     potential_vals = Puzzle::DECIMAL_VALUES - house_vals
 
     potential_vals.sort!
-
   end
 
 

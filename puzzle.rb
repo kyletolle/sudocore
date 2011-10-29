@@ -18,8 +18,7 @@ class Puzzle
   # The values of blank cells in the puzzle.
   BLANKS_REGEX = /^[_\.]$/
 
-  ## Names of classes from: http://en.wikipedia.org/wiki/Sudoku#Terminology
-  ##
+  # Names of class from: http://en.wikipedia.org/wiki/Sudoku#Terminology
   require "./cell"
 
   ## Bring in other methods.
@@ -35,13 +34,14 @@ class Puzzle
   does "puzzle/each_methods"
 
   # Returns the cell from the position [row][column] specified.
+  # Row and column numbers must be in the range for the base of the puzzle.
   def cell(row_num, col_num)
     return @puzzle[row_num][col_num]
   end
 
   does "puzzle/houses"
 
-  # Solves sudoku puzzle.
+  # Solves a valid sudoku puzzle.
   def solve
     # If the puzzle has already been solved, don't solve it again, just return.
     return self if solved?
@@ -75,17 +75,23 @@ class Puzzle
 
   # Check to make sure the puzzle, as read in from the file, is valid and can be solved.
   def valid?
+    # Valid puzzle has 9 rows
     unless @puzzle.size == 9
       raise RuntimeError, "Sudoku puzzle must have 9 rows."
     end
 
+    # Valid puzzle has 9 columns of 9 cells.
     each_row do |row|
       unless row.size == 9
         raise RuntimeError, "Each row in the Sudoku puzzle must have 9 cells."
       end
     end
 
-    #TODO: Make sure all the characters in the puzzle are valid.
+    # Valid puzzle has valid cells.
+    each do |cell|
+      cell.valid?
+    end
+
     #TODO: Find out if there are conflicts in row, column or nonet.
 
     # If we get this far without error, the puzzle is valid.
