@@ -20,7 +20,7 @@ module Puzzle::CreationTrait
       @current_row = nil
 
       #TODO: Allow different algorithms to be chosen.
-      require './bruteforce'
+      require './brute_force'
       @algorithm = BruteForce.new
 
       # Read in the file containing the puzzle.
