@@ -18,13 +18,12 @@ class BruteForce < Algorithm
 
   # Brute force solution to solve the puzzle starting at index.
   def try_solve(index)
-    #TODO: Should this be made into some debug functionality?
-    #print_on = [0]
-    #if print_on.include?(index)
-    #  puts @puzzle
-    #end
-    #puts "Waiting to go ahead. Hit enter."
-    #STDIN.gets
+    if @debug
+      puts @puzzle
+
+      puts "Waiting to go ahead. Hit enter."
+      STDIN.gets
+    end
 
     # If we've completed the entire puzzle, we want to make sure it's been validly solved.
     if index == (9*9)

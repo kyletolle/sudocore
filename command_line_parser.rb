@@ -29,9 +29,9 @@ class CommandLineParser
       end
 
       # Whether the user wants to step through the algorithm.
-      opts.on('-d', '--debug', "TODO:Algorithm used will allow you to step through",
-                               "  iteration by iteration and show the current",
-                               "  state of the puzzle.") do |d|
+      opts.on('-d', '--debug', "Algorithm used to solve puzzle will prompt user to ",
+                               "  proceed after each iteration of solving and show the ",
+                               "  current state of the puzzle.") do |d|
         options.debug = d
       end
 
