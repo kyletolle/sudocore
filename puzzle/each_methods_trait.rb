@@ -42,8 +42,8 @@ module Puzzle::EachMethodsTrait
     # Yields houses that represent each nonet in the puzzle.
     def each_nonet
       # Loop over the ranges as row values and again as column values to cover all the nonets.
-      NONET_RANGES.each do |row_range|
-        NONET_RANGES.each do |col_range|
+      Puzzle::NONET_RANGES.each do |row_range|
+        Puzzle::NONET_RANGES.each do |col_range|
   
           # Start with an empty nonet.
           nonet_cells = []

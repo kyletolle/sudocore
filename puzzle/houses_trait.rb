@@ -33,8 +33,8 @@ module Puzzle::HousesTrait
       col_num = nonet_num % 3;
 
       # The row and column range which represents the nonet.
-      row_range = NONET_RANGES[row_num]
-      col_range = NONET_RANGES[col_num]
+      row_range = Puzzle::NONET_RANGES[row_num]
+      col_range = Puzzle::NONET_RANGES[col_num]
 
       # Start with a blank nonet.
       nonet_cells = []

@@ -9,10 +9,10 @@ module Puzzle::CreationTrait
       #TODO: How can I make passed in options optional and also a hash?
 
       #TODO: Add whether we want to use decimal or hex digits.
-      @digit_regex = DECIMAL_REGEX
+      @digit_regex = Puzzle::DECIMAL_REGEX
 
       # Characters to represent valid blank characters in the puzzle.
-      @blank_regex = BLANKS_REGEX
+      @blank_regex = Puzzle::BLANKS_REGEX
 
       ## Read and parse in the puzzle now.
       ##
