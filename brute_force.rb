@@ -79,6 +79,7 @@ class BruteForce < Algorithm
     end
   end
   
+
   ## For index_to_* methods, the following must be true for valid results:
   ## 0 <= index < (base*base)
   ## ie. The index must be greater than or equal zero but less than the number of cells

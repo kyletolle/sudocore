@@ -5,7 +5,7 @@ module Puzzle::CreationTrait
     # Parses sudoku puzzle file and builds data structure for solving.
     # @parm string file path to file containing sudoku puzzle
     #TODO: @parm for options
-    def initialize(filename, debug = false)
+    def initialize(filename, debug = false, verbose = false)
       #TODO: How can I make passed in options optional and also a hash?
 
       #TODO: Add whether we want to use decimal or hex digits.
@@ -21,7 +21,7 @@ module Puzzle::CreationTrait
 
       #TODO: Allow different algorithms to be chosen.
       require './brute_force'
-      @algorithm = BruteForce.new(debug)
+      @algorithm = BruteForce.new(debug, verbose)
 
       # Read in the file containing the puzzle.
       File.open(filename) do |file|

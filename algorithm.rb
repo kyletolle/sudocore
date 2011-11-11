@@ -3,8 +3,9 @@ class Algorithm
   # Initializes the algorithm
   # @param debug true/false Indicates whether the user wants the algorithm
   # to pause after each iteration and show the current state of the puzzle.
-  def initialize(debug = false)
+  def initialize(debug = false, verbose = false)
     @debug = debug
+    @verbose = verbose
   end
 
 

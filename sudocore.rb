@@ -10,11 +10,11 @@ begin
 
   # Create the puzzle with the file.
   require './puzzle'
-  puzzle = Puzzle.new(options.file, options.debug)
+  puzzle = Puzzle.new(options.file, options.debug, options.verbose)
 
   # Set up timer with whether user wants to log time info, and to what detail.
   require './timer'
-  timer = Timer.new(options.time)
+  timer = Timer.new(options.time, options.verbose)
 
 
   # Write out the puzzle before it is solved.

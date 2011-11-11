@@ -36,7 +36,7 @@ class CommandLineParser
       end
 
       # Outputs more information when solving the puzzle.
-      opts.on('-v', '--verbose', "TODO:Output verbosely while running.") do |v|
+      opts.on('-v', '--verbose', "Output verbosely while running.") do |v|
         options.verbose = v
       end
 
