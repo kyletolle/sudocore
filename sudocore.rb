@@ -8,7 +8,7 @@ options = cmd_parser.parse!
 
 # Create the puzzle with the file.
 require './puzzle'
-puzzle = Puzzle.new(options.file)
+puzzle = Puzzle.new(options.file, options.debug)
 
 # Set up timer with whether user wants to log time info, and to what detail.
 require './timer'
