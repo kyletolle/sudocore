@@ -29,12 +29,12 @@ module Puzzle::HousesTrait
     def nonet(nonet_num)
       ## Calculate row and column of nonet from the number.
       ##
-      row_num = nonet_num / 3;
-      col_num = nonet_num % 3;
+      row_num = nonet_num / @base::NONET_SIZE;
+      col_num = nonet_num % @base::NONET_SIZE;
 
       # The row and column range which represents the nonet.
-      row_range = Puzzle::NONET_RANGES[row_num]
-      col_range = Puzzle::NONET_RANGES[col_num]
+      row_range = @base::NONET_RANGES[row_num]
+      col_range = @base::NONET_RANGES[col_num]
 
       # Start with a blank nonet.
       nonet_cells = []

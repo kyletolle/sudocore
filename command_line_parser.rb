@@ -23,6 +23,7 @@ class CommandLineParser
       opts.separator ""
       opts.separator "Specific options:"
 
+      # TODO:Get this working
       # Sets the base of the puzzle.
       opts.on('-b', "--base [BASE]", [:dec, :hex], "TODO:Select puzzle base (dec, hex)") do |b|
         options.base = b

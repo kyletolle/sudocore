@@ -1,7 +1,15 @@
 # Data structure to represent an individual cell in the puzzle.
 class Cell
   attr_reader :char
+  @@base = Decimal
 
+  def self.base=(base)
+    @@base = base
+  end
+
+  def self.base
+    return @@base
+  end
 
   # Create a cell with the given character.
   # The character must be in the puzzle's base.
@@ -27,8 +35,8 @@ class Cell
   def valid?
     #TODO: Check to see if char matches the digit or blank regexes.
     #TODO: How do we see what base the Cell should be in based on Sudoku's base?
-    unless char =~ Puzzle::DECIMAL_REGEX or char =~ Puzzle::BLANKS_REGEX
-      raise ArgumentError, "Each character of the Sudoku puzzle's Cells must be a valid character or blank entry."
+    unless @@base::VALUES.include?(char.to_i) or char =~ Puzzle::BLANKS_REGEX
+      raise ArgumentError, "Invalid character: #{char}. Each character of the Sudoku puzzle's Cells must be a valid character or blank entry."
     end
   end
 

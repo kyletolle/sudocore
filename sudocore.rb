@@ -1,7 +1,6 @@
 ## Sudocore - A Sudoku solver written in Ruby.
 ##
 
-# Prevents ugly error from a user killing the program.
 begin
   # Parse the command line options and get the filename that holds the puzzle.
   require './command_line_parser'
@@ -10,7 +9,7 @@ begin
 
   # Create the puzzle with the file.
   require './puzzle'
-  puzzle = Puzzle.new(options.file, options.debug, options.verbose)
+  puzzle = Puzzle.new(options.file, options.base, options.debug, options.verbose)
 
   # Set up timer with whether user wants to log time info, and to what detail.
   require './timer'
@@ -29,6 +28,7 @@ begin
   puts "Solved puzzle:"
   puts "#{puzzle.to_s}"
 
+# Prevents ugly error from a user killing the program.
 rescue Interrupt
   exit
 end

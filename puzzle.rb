@@ -1,18 +1,59 @@
 require 'modularity'
 
+class Base
+
+end
+
+class Decimal < Base
+  N = 9;
+  
+  # The decimal values for a puzzle.
+  VALUES = (1..9).to_a
+  RANGE = (0..8)
+  
+  HOUSE_TOTAL = 45
+
+  # The values of rows/columns that are part of the same nonet.
+  NONET_SIZE = 3
+  NONET_RANGES = [0..2, 3..5 ,6..8]
+
+  INPUT = {"1"=>"1", "2"=>"2", "3"=>"3",
+           "4"=>"4", "5"=>"5", "6"=>"6",
+           "7"=>"7", "8"=>"8", "9"=>"9"}
+
+  OUTPUT = {1=>"1", 2=>"2", 3=>"3",
+            4=>"4", 5=>"5", 6=>"6",
+            7=>"7", 8=>"8", 9=>"9"}
+end
+
+class Hexadecimal < Base
+  N = 16;
+
+  # The hex values for a puzzle.
+  VALUES = (1..16).to_a
+  RANGE = (0..15)
+
+  HOUSE_TOTAL = 136
+
+  NONET_SIZE = 4
+  NONET_RANGES = [0..3, 4..7, 8..11, 12..15]
+
+  INPUT = {"0"=>"1",  "1"=>"2",  "2"=>"3",  "3"=>"4",
+           "4"=>"5",  "5"=>"6",  "6"=>"7",  "7"=>"8",
+           "8"=>"9",  "9"=>"10", "A"=>"11", "B"=>"12",
+           "C"=>"13", "D"=>"14", "E"=>"15", "F"=>"16"}
+  
+
+  #Starts with 1 and ands with 16 to keep the values 1-index
+  OUTPUT = {1=>"0",  2=>"1",  3=>"2",  4=>"3",
+            5=>"4",  6=>"5",  7=>"6",  8=>"7",
+            9=>"8",  10=>"9",  11=>"A", 12=>"B",
+            13=>"C", 14=>"D", 15=>"E", 16=>"F"}
+end
+
 # The data structure for the Sudoku Puzzle.
 # Separate from the algorithm used to solve the puzzles.
 class Puzzle
-  # The values of rows/columns that are part of the same nonet.
-  NONET_RANGES = [0..2, 3..5 ,6..8]
-
-  # The decimal values for a puzzle.
-  DECIMAL_REGEX = /^[0-9]$/
-  DECIMAL_VALUES = (1..9).to_a
-
-  #TODO: Yet to be implemented.
-  # The hex values for a puzzle.
-  HEX_REGEX = /^[a-zA-z0-9]$/
 
   # The values of blank cells in the puzzle.
   BLANKS_REGEX = /^[_\.]$/
@@ -49,7 +90,7 @@ class Puzzle
     return self if solved?
 
     # If the puzzle is not valid, we'll error out.
-    @algorithm.solve(self) if valid?
+    @algorithm.solve(self, @base) if valid?
 
     self
   # Catch puzzle validity errors
@@ -81,15 +122,15 @@ class Puzzle
 
   # Check to make sure the puzzle, as read in from the file, is valid and can be solved.
   def valid?
-    # Valid puzzle has 9 rows.
-    unless @puzzle.size == 9
-      raise RuntimeError, "Sudoku puzzle must have 9 rows."
+    # Valid puzzle has N rows.
+    unless @puzzle.size == @base::N
+      raise RuntimeError, "Sudoku puzzle must have #{@base::N} rows."
     end
 
-    # Valid puzzle has 9 columns of 9 cells.
+    # Valid puzzle has N columns of N cells.
     each_row do |row|
-      unless row.size == 9
-        raise RuntimeError, "Each row in the Sudoku puzzle must have 9 cells."
+      unless row.size == @base::N
+        raise RuntimeError, "Each row in the Sudoku puzzle must have #{@base::N} cells."
       end
     end
 
@@ -105,18 +146,20 @@ class Puzzle
   end
 
 
+  # Return whether the total passed in is equal to the total for a valid house.
+  def is_valid_house_total?(total)
+    return total == @base::HOUSE_TOTAL
+  end
+
+
+  # Return the total of adding up all the cells in this house.
+  def house_total(house)
+    return house.inject(0) {|sum, cell| sum + cell.to_i }
+  end
+
+
   # Has the puzzle been solved? Meaning, do each of the rows, columns and nonets have values 1-9.
   def solved?
-    # Return whether the total passed in is equal to the total for a valid house.
-    def is_valid_house_total?(total)
-      return total == 45
-    end
-
-    # Return the total of adding up all the cells in this house.
-    def house_total(house)
-      return house.inject(0) {|sum, cell| sum + cell.to_i }
-    end
-
     ## Check whether all the houses in the puzzle have valid totals.
     ##
 

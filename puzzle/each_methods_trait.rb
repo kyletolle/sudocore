@@ -23,13 +23,13 @@ module Puzzle::EachMethodsTrait
     # Yields houses that represent each column in the puzzle.
     def each_column
       # For all columns.
-      (0..8).each do |col_num|
+      @base::RANGE.each do |col_num|
         
         # Start with an empty column.
         col_cells = []
   
         # Add value of the column for each row to the column array.
-        (0..8).each do |row_num|
+        @base::RANGE.each do |row_num|
           col_cells << @puzzle[row_num][col_num]
         end
   
@@ -42,8 +42,8 @@ module Puzzle::EachMethodsTrait
     # Yields houses that represent each nonet in the puzzle.
     def each_nonet
       # Loop over the ranges as row values and again as column values to cover all the nonets.
-      Puzzle::NONET_RANGES.each do |row_range|
-        Puzzle::NONET_RANGES.each do |col_range|
+      @base::NONET_RANGES.each do |row_range|
+        @base::NONET_RANGES.each do |col_range|
   
           # Start with an empty nonet.
           nonet_cells = []

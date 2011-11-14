@@ -5,14 +5,17 @@ module Puzzle::CreationTrait
     # Parses sudoku puzzle file and builds data structure for solving.
     # @parm string file path to file containing sudoku puzzle
     #TODO: @parm for options
-    def initialize(filename, debug = false, verbose = false)
+    def initialize(filename, base = :dec, debug = false, verbose = false)
       #TODO: How can I make passed in options optional and also a hash?
 
-      #TODO: Add whether we want to use decimal or hex digits.
-      @digit_regex = Puzzle::DECIMAL_REGEX
+      case base
+      when :dec
+        @base = Decimal
+      when :hex
+        @base = Hexadecimal
+      end
 
-      # Characters to represent valid blank characters in the puzzle.
-      @blank_regex = Puzzle::BLANKS_REGEX
+      Cell.base = @base;
 
       ## Read and parse in the puzzle now.
       ##
@@ -30,7 +33,11 @@ module Puzzle::CreationTrait
           # Create a puzzle cell for each character of the line.
           line.chomp.each_char do |char| 
             # Add this cell to the row.
-            add_cell(Cell.new(char))
+            if @base::INPUT.has_key?(char)
+              add_cell(Cell.new(@base::INPUT[char]))
+            else
+              add_cell(Cell.new(char))
+            end
           end
 
           # Add this row to the puzzle.

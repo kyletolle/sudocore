@@ -11,17 +11,28 @@ module Puzzle::OutputTrait
         @puzzle.each_with_index.inject("") do |puzzle_string, (row, row_num)|
 
           # Put a grid in between the rows of nonets.
-          if (row_num+1) % 3 == 0 and row_num < 8
-            row_sep = " - - - + - - - + - - -\n"
-          else
-            row_sep = ""
+          row_sep = ""
+          # Check if this row is a multiple of the nonet size and not the last row.
+          if (row_num+1) % @base::NONET_SIZE == 0 and row_num < @base::N-1
+            # For nonet size times, we want to add...
+            @base::NONET_SIZE.times do |nonet|
+              # ...nonet size times hyphens...
+              @base::NONET_SIZE.times do
+                row_sep += " -"
+              end
+              # ...and a plus sign, unless it's the last nonet.
+              row_sep += " +" unless nonet == @base::NONET_SIZE-1
+            end
+            # We want to have
+            row_sep += "\n"
           end
 
           # Format each cell.
           row.each_with_index.inject(puzzle_string) do |row_string, (cell, cell_num)|
 
             # Put a grid between the columns of nonets.
-            if (cell_num+1) % 3 == 0 and cell_num < 8
+            # Check if this column is a multiple of nonet size and not the last column.
+            if (cell_num+1) % @base::NONET_SIZE == 0 and cell_num < @base::N-1
               sep = " |"
             else
               sep = ""
@@ -33,7 +44,7 @@ module Puzzle::OutputTrait
 
             # Non-blank cells aren't changed at all.
             else
-              cell_string = cell.to_s
+              cell_string = @base::OUTPUT[cell.to_i]
             end
 
             # Add this cell's value to the current row's string, with formatting as needed.
