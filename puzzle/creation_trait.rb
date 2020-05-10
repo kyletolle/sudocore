@@ -8,6 +8,9 @@ module Puzzle::CreationTrait
     def initialize(filename, debug = false, verbose = false)
       #TODO: How can I make passed in options optional and also a hash?
 
+      #TODO:
+      @base = Decimal
+      #/TODO:
       #TODO: Add whether we want to use decimal or hex digits.
       @digit_regex = Puzzle::DECIMAL_REGEX
 

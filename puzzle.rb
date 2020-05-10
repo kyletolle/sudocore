@@ -1,5 +1,11 @@
 require 'modularity'
 
+#TODO
+class Decimal
+  N = 9
+end
+#/TODO
+
 # The data structure for the Sudoku Puzzle.
 # Separate from the algorithm used to solve the puzzles.
 class Puzzle
@@ -81,15 +87,15 @@ class Puzzle
 
   # Check to make sure the puzzle, as read in from the file, is valid and can be solved.
   def valid?
-    # Valid puzzle has 9 rows.
-    unless @puzzle.size == 9
-      raise RuntimeError, "Sudoku puzzle must have 9 rows."
+    # Valid puzzle has the number of rows for its base.
+    unless @puzzle.size == @base::N
+      raise RuntimeError, "Sudoku puzzle must have #{@base::N} rows."
     end
 
-    # Valid puzzle has 9 columns of 9 cells.
+    # Valid puzzle has the number of columns for its base.
     each_row do |row|
-      unless row.size == 9
-        raise RuntimeError, "Each row in the Sudoku puzzle must have 9 cells."
+      unless row.size == @base::N
+        raise RuntimeError, "Each row in the Sudoku puzzle must have #{@base::N} cells."
       end
     end
 
